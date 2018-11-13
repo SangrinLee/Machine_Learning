@@ -1,0 +1,42 @@
+﻿1. Based on the histograms, which attribute appears to be the most useful for classifying wine, and why?
+- alcohol
+- Based on the histograms, 'bad' values are mostly on left side which are lower values of alcohol, but 'good' values are mostly on right side which are higher values of alcohol. This 'alcohol' attribute has the most clear difference than any other attribues(because two values are well spread horizontally), which means it would be useful for classifying wine.
+
+2. What is the accuracy - the percentage of correctly classified instances - achieved by ZeroR when you run it on the training set? Why is ZeroR a helpful baseline for interpreting the performance of other classifiers?
+- 62.381%
+- ZeroR is the simplest classifier which relies on the target and ignores all predictors. And it simply predicts the majority category, which means it provides worst accuracy. This is useful for determining a baseline performance as a benchmark for other classification methods because based on the ZeroR which is worst accuracy, we can compare it to other classifier's accuracy and see how much this model is better than the ZeroR relatively. Therefore, to understand classifier's performance, it might be more illuminating to look not at absolute accuracy, but instead relative accuracy compared to what ZeroR gets.
+
+3. Using a decision tree Weka learned over the training set, what is the most informative single feature for this task, and what is its influence on wine quality? Does this match your answer from question 1?
+- alcohol
+- 'alcohol' is the feature with the highest information gain. As seen in decision tree, the first(highest) node in the decision tree is associated with the feature that has the highest information gain.
+A wine quality tends to be bad when alcohol attribute is equal to 10.8 or less than 10.8, whereas a wine quality tends to be good when alcohol attribute is greater than 10.8. This is based on the tree out of only one alcohol input attribute. 
+- It matches the answer from question 1.
+
+4. What is 10-fold cross-validation? What is the main reason for the difference between the percentage of Correctly Classified Instances when you measured accuracy on the training set itself, versus when you ran 10-fold cross-validation over the training set? Why is cross-validation important?
+- In 10 fold cross-validation, the original sample is randomly partitioned into 10 equal sized subsamples. Of the 10 subsamples, a single subsample is retained as the validation data for testing the model, and the remaining 9 subsamples are used as training data. The cross-validation process is then repeated 10 times, with each of the 10 subsamples used exactly once as the validation data. The 10 results from the folds can then be averaged to produce a single estimation.
+- As the number of data samples are bigger, then the accuracy becomes high. In 10 fold cross validation, the number of data samples are less than the number of data samples when using the training set itself, which makes lower accuracy. Generally, Cross Validation gives lower accuracy because all observations are used for both training and validation, and each observation is used for validation exactly once. 
+- The main reason is that the cross-validation has a lower variance than a single set, which can be very important if the amount of data available is limited. The goal of cross validation is to define a dataset to test the model in the training phase (i.e., the validation dataset), in order to check problems like overfitting, give an insight on how the model will generalize to an independent dataset.
+
+5. What is the "command-line" for the model you are submitting? For example, "J48 -C 0.25 -M 2". What is the reported accuracy for your model using 10-fold cross-validation?
+- RandomForest -P 100 -I 250 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+- the accuracy is 91.164%
+
+6. In a few sentences, describe how you chose the model you are submitting. Be sure to mention your validation strategy and whether you tried varying any of the model parameters.
+- At first, I tried Decision tree, Naive Bayes, and Random decision tree. But, all of them showed lower accuracy compared to RandomForest.
+I used RandomForest Classifier which operates by constructing a multitude of decision trees at training time and outputting the class that is the mode of the classes (classification) or mean prediction (regression) of the individual trees. Random forests correct for decision trees' habit of overfitting to their training set.
+- I used 10-fold cross validation and also changed numIterations parameter to 250.
+
+7. A Wired magazine article from several years ago on the 'Peta Age' suggests that increasingly huge data sets, coupled with machine learning techniques, makes model building obsolete. In particular it says: This is a world where massive amounts of data and applied mathematics replace every other tool that might be brought to bear. Out with every theory of human behavior, from linguistics to sociology. Forget taxonomy, ontology, and psychology… In a short paragraph (about four sentences), state whether you agree with this statement, and why or why not.
+- I agree with this statement. As the world is getting more connected, data become various and they're getting related each other without borders as well. As various data are accumulated, it can be used to solve the problem in other various areas. And old techniques, of course, might be replaced by better one, as humans want to solve the problem in a better way. The way to solve is based on the previous data, but how to do it depends on machine learning tools. In other words, data where machine learning techniques can apply is utilized in massive way. It can be applied to mathematics, physics, linguistic, and our life. Depends on how we deal with the data, our decisions made by massive amount data learnt from various machine techniques is more likely to be better.
+
+8. Briefly explain what strategy you used to obtain the Classifiers A and B that performed well on one of the car or wine data sets, and not the other.
+- I chose RandomTree to obtain the Classifier A, and DecisionTree to obtain Classifier B.
+wine_acc(RandomTree) = 86.0317%
+car_acc(RandomTree) = 84.2857%
+wine_acc(DecisionTree) = 85.9788%
+car_acc(DecisionTree) = 89.8319%
+wine_acc(RandomTree) + car_acc(DecisionTree) - wine_acc(DecisionTree) - car_acc(RandomTree) = 5.5991
+I tried lots of classification methods such as Random Tree, Random Forest, Decision Tree, and Naive Bayes. By comparing the accuracy of each classifier, I found that Random Tree performed better on wine accuracy where all the wine data are comprised of continuous numeric input. On the other hand, Decision Tree performed better on car accuracy where all the car data are compirsed of discrete data.
+
+9. Name one major difference between the output space for the car data set vs. the wine data set, that might make some classifiers that are applicable to the wine data not applicable to the car data.
+- In case of wine data set, output of classification on decision tree is determined by using "equal" sign, which is more like dichotomy comparision. This is because all the wine data are comprised of continuous numeric input. However, in case of car data set, output of classification on decision tree is determined by using "less-than", "greater-than", or "equal" sign. This is because all the car data are comprised of discrete data. For this difference, some classifiers may be applicable to the wine data, but not applicable to the car data, or vice versa.
